@@ -4,6 +4,8 @@ import CON.CON.api.dto.StationCongestionDTO;
 import CON.CON.api.dto.TimeAvgTotal;
 import CON.CON.api.dto.TimeRecord;
 import CON.CON.api.dto.TimeTableItem;
+import CON.CON.api.dto.ToiletData;
+import CON.CON.api.dto.ToiletDto;
 import CON.CON.api.model.CongestionRecord;
 import CON.CON.api.dto.SubwayData;
 import CON.CON.api.service.CongestionService;
@@ -11,6 +13,7 @@ import CON.CON.api.service.TimeTableService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -46,7 +49,8 @@ public class ApiController {
     private String congestionKey;
     @Value(value = "${subwayKey}")
     private String subwayKey;
-
+    @Value(value = "${toiletKey}")
+    private String toiletKey;
     private final CongestionService congestionService;
     private final TimeTableService timeTableService;
 
@@ -56,12 +60,12 @@ public class ApiController {
     }
 
     @GetMapping("/toilet")
-    public ResponseEntity<String> toilet(@RequestParam int page, @RequestParam int perPage) {
-        String url = "https://infuser.odcloud.kr/oas/docs?namespace=15041244/v1?"
-                + "page="+page+"&perPage="+perPage;
+    public ResponseEntity<ToiletDto> toilet(@RequestParam int page, @RequestParam int perPage, String stationName) {
+        String url = "https://api.odcloud.kr/api/15041244/v1/uddi:34d0069b-5bff-43ec-a83d-d986eefdcb08?"
+                +"page="+page+"&perPage="+perPage;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", congestionKey); // 헤더에 인증 키 설정
+        headers.set("Authorization", toiletKey); // 헤더에 인증 키 설정
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -78,12 +82,25 @@ public class ApiController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-//             objectMapper.readValue(responseBody, );
-//            log.info("subway Data = {}",);
+            JsonNode rootNode = objectMapper.readTree(responseBody);
+            JsonNode dataNode = rootNode.path("data");
 
+            if (dataNode.isArray()) {
+                List<ToiletDto> toiletList = new ArrayList<>();
+                for (JsonNode node : (ArrayNode) dataNode) {
+                    ToiletDto toilet = objectMapper.treeToValue(node, ToiletDto.class);
+                    toiletList.add(toilet);
+                }
 
-//            return ResponseEntity.ok().body();
-        } catch (Exception e) {
+                // 추출된 데이터 출력
+                for (ToiletDto toilet : toiletList) {
+                    log.info("toiletName = {}",toilet.getStationName());
+                    if (toilet.getStationName().equals(stationName)){
+                        return ResponseEntity.ok().body(toilet);
+                    }
+                }
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
