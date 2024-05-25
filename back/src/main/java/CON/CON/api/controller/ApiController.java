@@ -38,7 +38,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("/**")
+@CrossOrigin("*")
 public class ApiController {
 
     @Value(value = "${congestionKey}")
