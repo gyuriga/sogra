@@ -1,0 +1,25 @@
+{
+  "stations": [
+    {"station_name": "판암", "station_number": "101"},
+    {"station_name": "신흥", "station_number": "102"},
+    {"station_name": "대동", "station_number": "103"},
+    {"station_name": "대전", "station_number": "104"},
+    {"station_name": "중구청", "station_number": "105"},
+    {"station_name": "서대전네거리", "station_number": "106"},
+    {"station_name": "오룡", "station_number": "107"},
+    {"station_name": "용문", "station_number": "108"},
+    {"station_name": "탄방", "station_number": "109"},
+    {"station_name": "시청", "station_number": "110"},
+    {"station_name": "정부청사", "station_number": "111"},
+    {"station_name": "갈마", "station_number": "112"},
+    {"station_name": "월평", "station_number": "113"},
+    {"station_name": "갑천", "station_number": "114"},
+    {"station_name": "유성온천", "station_number": "115"},
+    {"station_name": "구암", "station_number": "116"},
+    {"station_name": "현충원", "station_number": "117"},
+    {"station_name": "월드컵경기장", "station_number": "118"},
+    {"station_name": "노은", "station_number": "119"},
+    {"station_name": "지족", "station_number": "120"},
+    {"station_name": "반석", "station_number": "121"}
+  ]
+}

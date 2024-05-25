@@ -1,38 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-family: 'NanumSquareNeoLight'; */
+  font-family: 'NanumSquareNeo';
+  /* font-family: 'NanumSquareNeoBold'; */
+  /* font-family: 'NanumSquareNeoExtraBold'; */
+  /* font-family: 'NanumSquareNeoHeavy'; */
+}
+
+input {
+  &:focus {
+    outline: none;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
 .App {
+  margin: auto;
+  max-width: 390px;
   text-align: center;
+  padding: 20px;
+  background-color: #f5f5f5;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.react-select__control {
+  border-radius: 0 !important;
+  border-style: none !important;
+  border-bottom: 1px solid #ddd !important;
+  text-align: left !important;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.react-select__indicator-separator {
+  display: none !important;
 }
-
-.App-link {
-  color: #61dafb;
+.react-select__input-container * {
+  font-size: 12px !important;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.react-select__placeholder, .react-select__single-value, .react-select__menu {
+  font-size: 12px !important;
+}
+.react-select__control--is-focused {
+  border-color: #ddd !important;
+  box-shadow: none !important;
 }
