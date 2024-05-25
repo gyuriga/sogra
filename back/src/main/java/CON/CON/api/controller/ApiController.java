@@ -1,6 +1,7 @@
 package CON.CON.api.controller;
 
 import CON.CON.api.dto.StationCongestionDTO;
+import CON.CON.api.dto.TimeAvgTotal;
 import CON.CON.api.dto.TimeRecord;
 import CON.CON.api.dto.TimeTableItem;
 import CON.CON.api.model.CongestionRecord;
@@ -54,12 +55,40 @@ public class ApiController {
         this.timeTableService = timeTableService;
     }
 
-//    @GetMapping("/toilet")
-//    public ResponseEntity<String> toilet() {
-//        String url = "https://infuser.odcloud.kr/oas/docs?namespace=15041244/v1";
-//
-//
-//    }
+    @GetMapping("/toilet")
+    public ResponseEntity<String> toilet(@RequestParam int page, @RequestParam int perPage) {
+        String url = "https://infuser.odcloud.kr/oas/docs?namespace=15041244/v1?"
+                + "page="+page+"&perPage="+perPage;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", congestionKey); // 헤더에 인증 키 설정
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+
+        String responseBody = response.getBody();
+        log.info("response Body = {}",responseBody);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+//             objectMapper.readValue(responseBody, );
+//            log.info("subway Data = {}",);
+
+
+//            return ResponseEntity.ok().body();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
     @GetMapping("/subway")
     public ResponseEntity<String> getSubway() throws IOException, URISyntaxException {
         StringBuilder urlBuilder = new StringBuilder("http://www.djtc.kr/OpenAPI/service/TimeTableSVC/getAllTimeTable"); /*URL*/
@@ -144,12 +173,13 @@ public class ApiController {
         //역별로, 시간대
         log.info(stationName);
         return ResponseEntity.ok().body(congestionService.findAverageCongestionByStationName(stationName));
-    }     // 혼잡도 통계
+    }     // 혼잡도 통계 승차
 
     @PostMapping("/congestion")
-    public ResponseEntity<TimeRecord> getCongestionByStation(@RequestBody TimeRecord timeRecord) {
-        return ResponseEntity.ok().body(congestionService.findAverageByStationNameAndHour(timeRecord.getStationName(), timeRecord.getTime()));
+    public ResponseEntity<TimeAvgTotal> getCongestionByStation(@RequestBody TimeRecord timeRecord) {
+        TimeRecord averageDown = congestionService.findAverageDown(timeRecord.getStationName(), timeRecord.getTime());
+        TimeRecord averageByStationNameAndHour = congestionService.findAverageByStationNameAndHour(timeRecord.getStationName(), timeRecord.getTime());
+        TimeAvgTotal timeAvgTotal = new TimeAvgTotal(averageByStationNameAndHour.getAverage(), averageDown.getAverage());
+        return ResponseEntity.ok().body(timeAvgTotal);
     }
-
-
 }

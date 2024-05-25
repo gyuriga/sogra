@@ -64,4 +64,13 @@ public class CongestionService {
     public TimeRecord findAverageByStationNameAndHour(String stationName, String hourField) {
         return TimeRecord.builder().average((repository.findAverageByStationNameAndField(stationName, hourField))).build();
     }
+
+    public List<StationCongestionDTO> findCongestionByStationName(String stationName) {
+        List<StationCongestionDTO> congestionByStationName = repository.findCongestionByStationName(stationName);
+        return congestionByStationName;
+    }
+
+    public TimeRecord findAverageDown(String stationName, String hourField) {
+        return TimeRecord.builder().average(repository.findAverageDown(stationName, hourField)).build();
+    }
 }
