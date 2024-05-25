@@ -25,6 +25,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("/**")
 public class ApiController {
 
     @Value(value = "${congestionKey}")
@@ -52,6 +54,12 @@ public class ApiController {
         this.timeTableService = timeTableService;
     }
 
+//    @GetMapping("/toilet")
+//    public ResponseEntity<String> toilet() {
+//        String url = "https://infuser.odcloud.kr/oas/docs?namespace=15041244/v1";
+//
+//
+//    }
     @GetMapping("/subway")
     public ResponseEntity<String> getSubway() throws IOException, URISyntaxException {
         StringBuilder urlBuilder = new StringBuilder("http://www.djtc.kr/OpenAPI/service/TimeTableSVC/getAllTimeTable"); /*URL*/
