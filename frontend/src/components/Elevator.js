@@ -42,42 +42,48 @@ const ElivatorItem = styled.div`
     font-family: 'NanumSquareNeoRegular';
   }
 `;
-const Elivator = () => {
+const Elivator = ({station}) => {
+  const [startStation, endStation] = station;
   return (
-    <ElivatorContainer>
-      <Title>엘리베이터 정보</Title>
+    <>
+      {startStation && endStation ? (
+        <ElivatorContainer>
+        <Title>엘리베이터 정보</Title>
 
-      <ElivatorItemWrapper>
-        <ElivatorItem>
-          <p>호기</p>
-          <span>1호기</span>
-        </ElivatorItem>
-        <ElivatorItem>
-          <p>설치 위치</p>
-          <span>1,2번출구측</span>
-        </ElivatorItem>
-        <ElivatorItem>
-          <p>운행 구간</p>
-          <span>지하1층-지상</span>
-        </ElivatorItem>
-      </ElivatorItemWrapper>
+        <ElivatorItemWrapper>
+          <ElivatorItem>
+            <p>호기</p>
+            <span>1호기</span>
+          </ElivatorItem>
+          <ElivatorItem>
+            <p>설치 위치</p>
+            <span>1,2번출구측</span>
+          </ElivatorItem>
+          <ElivatorItem>
+            <p>운행 구간</p>
+            <span>지하1층-지상</span>
+          </ElivatorItem>
+        </ElivatorItemWrapper>
 
-      <ElivatorItemWrapper>
-        <ElivatorItem>
-          <p>호기</p>
-          <span>2호기</span>
-        </ElivatorItem>
-        <ElivatorItem>
-          <p>설치 위치</p>
-          <span>1,2번출구측</span>
-        </ElivatorItem>
-        <ElivatorItem>
-          <p>운행 구간</p>
-          <span>지하1층-지상</span>
-        </ElivatorItem>
-      </ElivatorItemWrapper>
+        <ElivatorItemWrapper>
+          <ElivatorItem>
+            <p>호기</p>
+            <span>2호기</span>
+          </ElivatorItem>
+          <ElivatorItem>
+            <p>설치 위치</p>
+            <span>1,2번출구측</span>
+          </ElivatorItem>
+          <ElivatorItem>
+            <p>운행 구간</p>
+            <span>지하1층-지상</span>
+          </ElivatorItem>
+        </ElivatorItemWrapper>
 
-    </ElivatorContainer>
+      </ElivatorContainer>
+      ) : null}
+    </>
+
   );
 }
 

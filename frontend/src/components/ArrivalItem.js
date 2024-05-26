@@ -42,6 +42,8 @@ const TimeZeroFormat = (time) => {
 const ArrivalItem = ({type, time, reqTime, station}) => {
   const [timeDiff, setTimeDiff] = useState(0);
   const [timeFormat, setTimeFormat] = useState('');
+  const [up, setUp] = useState(0);
+  const [down, setDown] = useState(0);
 
   useEffect(() => {
     if (!time || !reqTime) return;
@@ -53,22 +55,27 @@ const ArrivalItem = ({type, time, reqTime, station}) => {
   }, [time, reqTime]);
 
   useEffect(() => {
-    const url = 'http://localhost:8000/api/arrival';
+    const url = 'http://localhost:8080/api/congestion';
 
     const data = {
       time: timeFormat,
-      station: station
+      stationName: station
     };
 
     console.log(data);
 
-    // axios.post(url, {
-    //   time: timeFormat,
-    //   station: station
-    // });
-  }, [timeFormat]);
+    axios.post(url, {
+      time: timeFormat,
+      stationName: station
+    }).then((response) => {
+      const data = response.data;
+      setUp(data.up);
+      setDown(data.down);
+    }).catch((error) => {
+      console.log(error);
+    });
 
-  
+  }, [timeFormat, station]);
 
 
   return (
@@ -83,11 +90,11 @@ const ArrivalItem = ({type, time, reqTime, station}) => {
       </ArrivalItemBox>
       <ArrivalItemBox>
         <p>평균 승차 인원</p>
-        <span>332명</span>
+        <span>{Math.round(up)}명</span>
       </ArrivalItemBox>
       <ArrivalItemBox className='last'>
         <p>평균 하차 인원</p>
-        <span>332명</span>
+        <span>{Math.round(down)}명</span>
       </ArrivalItemBox>
     </ArrivalItemContainer>
   );
