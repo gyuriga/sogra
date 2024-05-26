@@ -16,3 +16,5 @@
     </tr>
   </tbody>
 </table>
+
+![image](https://github.com/gyuriga/sogra/assets/86146265/d4e7543b-badb-44b5-8439-89dd4f0855fa)
