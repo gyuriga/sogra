@@ -4,7 +4,6 @@ import CON.CON.api.dto.StationCongestionDTO;
 import CON.CON.api.dto.TimeAvgTotal;
 import CON.CON.api.dto.TimeRecord;
 import CON.CON.api.dto.TimeTableItem;
-import CON.CON.api.dto.ToiletData;
 import CON.CON.api.dto.ToiletDto;
 import CON.CON.api.model.CongestionRecord;
 import CON.CON.api.dto.SubwayData;
@@ -80,7 +79,7 @@ public class ApiController {
         String responseBody = response.getBody();
         log.info("response Body = {}",responseBody);
         ObjectMapper objectMapper = new ObjectMapper();
-
+        ToiletDto tmp = null;
         try {
             JsonNode rootNode = objectMapper.readTree(responseBody);
             JsonNode dataNode = rootNode.path("data");
@@ -91,7 +90,7 @@ public class ApiController {
                     ToiletDto toilet = objectMapper.treeToValue(node, ToiletDto.class);
                     toiletList.add(toilet);
                 }
-
+                tmp = toiletList.get(0);
                 // 추출된 데이터 출력
                 for (ToiletDto toilet : toiletList) {
                     log.info("toiletName = {}",toilet.getStationName());
@@ -104,7 +103,7 @@ public class ApiController {
             e.printStackTrace();
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok().body(tmp);
     }
     @GetMapping("/subway")
     public ResponseEntity<String> getSubway() throws IOException, URISyntaxException {
@@ -199,4 +198,7 @@ public class ApiController {
         TimeAvgTotal timeAvgTotal = new TimeAvgTotal(averageByStationNameAndHour.getAverage(), averageDown.getAverage());
         return ResponseEntity.ok().body(timeAvgTotal);
     }
+
+//    @GetMapping("/elevator")
+//    public
 }
