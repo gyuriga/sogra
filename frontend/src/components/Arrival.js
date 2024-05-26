@@ -43,7 +43,9 @@ const ArrivalList = styled.div`
   flex-direction: column;
 `;
 
-const ArrivalButton = styled.button`
+const ArrivalButton = styled.a`
+  text-align: center;
+  font-size: 12px;
   width: 100%;
   padding: 10px;
   background-color: #e1e1e1;
@@ -52,6 +54,7 @@ const ArrivalButton = styled.button`
   border-radius: 5px;
   margin-top: 10px;
   font-family: 'NanumSquareNeoBold';
+  text-decoration: none;
 `;
 
 const Time = styled.span`
@@ -61,6 +64,18 @@ const Time = styled.span`
   font-family: 'NanumSquareNeoBold';
   margin-left: auto;
 `;
+
+const TimeZeroFormat = (time) => {
+  let [hour, minute] = time.split(':');
+  if (hour < 10) {
+    hour = '0' + hour;
+  }
+  if (minute < 10) {
+    minute = '0' + minute;
+  }
+  return hour + ':' + minute;
+
+}
 
 const Arrival = ({station}) => {
   const [startStation, endStation] = station;
@@ -129,7 +144,7 @@ const Arrival = ({station}) => {
       <ArrivalWrapper>
         <TitleWrapper>
           <Title>열차 도착 정보</Title>
-          <Time>{time} 기준 정보</Time>
+          <Time>{TimeZeroFormat(time)} 기준 정보</Time>
         </TitleWrapper>
 
         <ArrivalContainer>
@@ -140,7 +155,7 @@ const Arrival = ({station}) => {
             <ArrivalItem station={startStation} reqTime={time} type={2} time={time2}></ArrivalItem>
 
           </ArrivalList>
-          <ArrivalButton>내역 더보기 &gt;</ArrivalButton>
+          <ArrivalButton href='/arrival'>내역 더보기 &gt;</ArrivalButton>
         </ArrivalContainer>
       </ArrivalWrapper>
       ) : null}
