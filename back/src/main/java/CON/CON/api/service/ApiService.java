@@ -27,6 +27,8 @@ public class ApiService {
     private String subwayKey;
     @Value(value = "${toiletKey}")
     private String toiletKey;
+    @Value(value = "${elevatorKey}")
+    private String elevatorKey;
 
     public static ResponseEntity<String> requestApi(String url, String congestionKey) {
         HttpHeaders headers = new HttpHeaders();
@@ -52,8 +54,14 @@ public class ApiService {
 
     public ResponseEntity<String> requestToilet(int page, int perPage) {
         String url = "https://api.odcloud.kr/api/15041244/v1/uddi:34d0069b-5bff-43ec-a83d-d986eefdcb08?"
-                +"page="+page+"&perPage="+perPage;
+                + "page=" + page + "&perPage=" + perPage;
         return requestApi(url, toiletKey);
+    }
+
+    public ResponseEntity<String> requestElevator(int page, int perPage) {
+        String url = "http://api.odcloud.kr/api/15043922/v1/uddi:455dfa45-641d-4829-941d-97a2d27f7443?"
+                + "page=" + page + "&perPage=" + perPage;
+        return requestApi(url, elevatorKey);
     }
 
     public ResponseEntity<String> requestSubwayLine()

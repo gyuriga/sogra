@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StationCongestionDTO {
+public class StationCongestion {
     private String stationName;
     private double hour00_01;
     private double hour01_02;

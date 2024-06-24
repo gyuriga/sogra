@@ -1,6 +1,6 @@
 package CON.CON.api.controller;
 
-import CON.CON.api.dto.StationCongestionDTO;
+import CON.CON.api.dto.StationCongestion;
 import CON.CON.api.dto.TimeAvgTotal;
 import CON.CON.api.dto.TimeRecord;
 import CON.CON.api.model.CongestionRecord;
@@ -57,7 +57,7 @@ public class CongestionController {
     }   // 한달 사이에 승하차 인원 테이블 갱신
 
     @GetMapping("/congestion")
-    public ResponseEntity<List<StationCongestionDTO>> getCongestion(@RequestParam String stationName) {
+    public ResponseEntity<List<StationCongestion>> getCongestion(@RequestParam String stationName) {
         //역별로, 시간대
         log.info(stationName);
         return ResponseEntity.ok().body(congestionService.findAverageCongestionByStationName(stationName));

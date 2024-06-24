@@ -1,6 +1,6 @@
 package CON.CON.api.service;
 
-import CON.CON.api.dto.StationCongestionDTO;
+import CON.CON.api.dto.StationCongestion;
 import CON.CON.api.dto.TimeRecord;
 import CON.CON.api.model.CongestionRecord;
 import CON.CON.api.dto.SubwayData;
@@ -55,8 +55,8 @@ public class CongestionService {
                         .build())).toList();
     }
 
-    public List<StationCongestionDTO> findAverageCongestionByStationName(String stationName) {
-        List<StationCongestionDTO> averageCongestionByStationName = repository.findAverageCongestionByStationName(
+    public List<StationCongestion> findAverageCongestionByStationName(String stationName) {
+        List<StationCongestion> averageCongestionByStationName = repository.findAverageCongestionByStationName(
                 stationName);
         return averageCongestionByStationName;
     }
@@ -65,8 +65,8 @@ public class CongestionService {
         return TimeRecord.builder().average((repository.findAverageByStationNameAndField(stationName, hourField))).build();
     }
 
-    public List<StationCongestionDTO> findCongestionByStationName(String stationName) {
-        List<StationCongestionDTO> congestionByStationName = repository.findCongestionByStationName(stationName);
+    public List<StationCongestion> findCongestionByStationName(String stationName) {
+        List<StationCongestion> congestionByStationName = repository.findCongestionByStationName(stationName);
         return congestionByStationName;
     }
 

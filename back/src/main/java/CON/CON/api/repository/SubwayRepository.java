@@ -1,7 +1,6 @@
 package CON.CON.api.repository;
 
-
-import CON.CON.api.dto.StationCongestionDTO;
+import CON.CON.api.dto.StationCongestion;
 import CON.CON.api.model.CongestionRecord;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubwayRepository extends JpaRepository<CongestionRecord, Long> {
         @Query(
-                "SELECT new CON.CON.api.dto.StationCongestionDTO(" +
+                "SELECT new CON.CON.api.dto.StationCongestion(" +
                         "c.stationName, " +
                         "AVG(c.hour00_01), AVG(c.hour01_02), AVG(c.hour02_03), AVG(c.hour03_04), " +
                         "AVG(c.hour04_05), AVG(c.hour05_06), AVG(c.hour06_07), AVG(c.hour07_08), " +
@@ -23,10 +22,10 @@ public interface SubwayRepository extends JpaRepository<CongestionRecord, Long> 
                         "FROM CongestionRecord c " +
                         "where c.type = '승차'"+
                         "GROUP BY c.stationName")
-        List<StationCongestionDTO> findAverageCongestionByStationName(@Param("stationName") String stationName);
+        List<StationCongestion> findAverageCongestionByStationName(@Param("stationName") String stationName);
 
         @Query(
-                "SELECT new CON.CON.api.dto.StationCongestionDTO(" +
+                "SELECT new CON.CON.api.dto.StationCongestion(" +
                         "c.stationName, " +
                         "AVG(c.hour00_01), AVG(c.hour01_02), AVG(c.hour02_03), AVG(c.hour03_04), " +
                         "AVG(c.hour04_05), AVG(c.hour05_06), AVG(c.hour06_07), AVG(c.hour07_08), " +
@@ -37,7 +36,7 @@ public interface SubwayRepository extends JpaRepository<CongestionRecord, Long> 
                         "FROM CongestionRecord c " +
                         "where c.type = '하차'"+
                         "GROUP BY c.stationName")
-        List<StationCongestionDTO> findCongestionByStationName(@Param("stationName") String stationName);
+        List<StationCongestion> findCongestionByStationName(@Param("stationName") String stationName);
 
         @Query(value = "SELECT AVG(" +
                 "CASE "
